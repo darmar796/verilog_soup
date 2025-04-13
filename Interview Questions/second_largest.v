@@ -12,7 +12,7 @@ module model #(parameter
   input clk,
   input resetn,
   input [DATA_WIDTH-1:0] din,
-  output logic [DATA_WIDTH-1:0] dout
+  output logic [DATA_WIDTH-1:0] dout  // second largest value
 );
 
 reg [DATA_WIDTH-1:0] max_value; // track max value
@@ -23,15 +23,15 @@ always @ (posedge clk) begin
      max_value <= 32'd0; // reset the tracking of max value
   end
   else begin
-    if (din < max_value && din >= dout) begin
+    if (din < max_value && din >= dout) begin // e.g. second largest value changed, but max value stayed the same
       dout <= din; // 2nd largest value 
       max_value <= max_value;  // max value unchanged
     end
-    else if (din >= max_value) begin
-      dout <= max_value; // 2nd largest value (old max value is now 2nd)
+    else if (din >= max_value) begin // e.g. max value changed, so 2nd largest value becomes previous max value
+      dout <= max_value; // 2nd largest value (old max value is now next max)
       max_value <= din; // update new max value
     end
-    else begin  // e.g. din < dout
+    else begin  // e.g. din < dout  // the value was smaller than the current 2nd largest value
       dout <= dout;  // unchanged
       max_value <= max_value; // unchanged
     end
