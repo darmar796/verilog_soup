@@ -19,7 +19,7 @@ always @ (posedge clk) begin
      buffer <= 16'd0; // flush buffer with 0 data
   end
   else begin
-    buffer <= {buffer[DATA_WIDTH-2:0], din}; // shift in new din
+    buffer <= {buffer[DATA_WIDTH-1:0], din}; // shift in new din
   end
 end
 endmodule
