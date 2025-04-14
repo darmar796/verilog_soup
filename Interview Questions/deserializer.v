@@ -1,6 +1,6 @@
 // deserializer
 // serial data in, parallel data out
-// when in reset
+// when in reset, output is 0
 
 module model #(parameter
   DATA_WIDTH = 16
